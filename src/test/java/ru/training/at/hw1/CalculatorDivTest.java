@@ -14,7 +14,7 @@ public class CalculatorDivTest {
     }
 
     @Test(groups = {Tags.MULT_DIV},
-            dataProvider = DataProviders.DIV_LONG_DATA_PROVIDER,
+            dataProvider = TestsDataProvider.DIV_LONG_DATA_PROVIDER,
             dataProviderClass = TestsDataProvider.class)
     public void calculatorCanExecuteDivOperationsWithLong(long a, long b, long expected) {
         long actual = calculator.div(a, b);
@@ -22,7 +22,7 @@ public class CalculatorDivTest {
     }
 
     @Test(groups = {Tags.MULT_DIV},
-            dataProvider = DataProviders.DIV_DOUBLE_DATA_PROVIDER,
+            dataProvider = TestsDataProvider.DIV_DOUBLE_DATA_PROVIDER,
             dataProviderClass = TestsDataProvider.class)
     public void calculatorCanExecuteDivOperationsWithDouble(double a, double b,
                                                             double expected, double accuracy) {
@@ -31,7 +31,7 @@ public class CalculatorDivTest {
     }
 
     @Test(groups = {Tags.MULT_DIV},
-            dataProvider = DataProviders.DIV_BY_ZERO_DATA_PROVIDER,
+            dataProvider = TestsDataProvider.DIV_BY_ZERO_DATA_PROVIDER,
             dataProviderClass = TestsDataProvider.class,
             expectedExceptions = NumberFormatException.class)
     public void calculatorCanOperateWithDivisionByZero(long a, long b) {

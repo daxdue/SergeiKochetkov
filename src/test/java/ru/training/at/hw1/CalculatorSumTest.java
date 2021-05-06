@@ -14,7 +14,7 @@ public class CalculatorSumTest {
     }
 
     @Test(groups = {Tags.ADD_SUB},
-            dataProvider = DataProviders.SUM_LONG_DATA_PROVIDER,
+            dataProvider = TestsDataProvider.SUM_LONG_DATA_PROVIDER,
             dataProviderClass = TestsDataProvider.class)
     public void calculatorCanExecuteSumOperationsWithLong(long a, long b, long expected) {
         long actual = calculator.sum(a, b);
@@ -22,7 +22,7 @@ public class CalculatorSumTest {
     }
 
     @Test(groups = {Tags.ADD_SUB},
-            dataProvider = DataProviders.SUM_DOUBLE_DATA_PROVER,
+            dataProvider = TestsDataProvider.SUM_DOUBLE_DATA_PROVER,
             dataProviderClass = TestsDataProvider.class)
     public void calculatorCanExecuteSumOperationsWithDouble(double a, double b,
                                                             double expected, double accuracy) {

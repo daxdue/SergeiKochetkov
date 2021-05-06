@@ -10,26 +10,39 @@
 
     <properties>
         <java.version>1.8</java.version>
+        <calculator.version>1.0</calculator.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>8</maven.compiler.source>
         <maven.compiler.target>8</maven.compiler.target>
+        <maven-surefire.version>3.0.0-M5</maven-surefire.version>
+        <maven-comiler-plugin.version>3.8.1</maven-comiler-plugin.version>
+        <maven-checkstyle-plugin.version>3.1.2</maven-checkstyle-plugin.version>
         <checkstyle.version>8.41.1</checkstyle.version>
+        <selenium-java.version>3.141.59</selenium-java.version>
         <testng.version>7.4.0</testng.version>
         <testng.configs.path>${project.build.testSourceDirectory}/resources</testng.configs.path>
         <testng.suite.file/>
+        <checkstyle-config.url>
+            https://raw.githubusercontent.com/DmitryKhodakovsky/epam-test-auto-spring-2021/master/codestyle_checks.xml
+        </checkstyle-config.url>
     </properties>
 
     <dependencies>
         <dependency>
             <groupId>com.epam</groupId>
             <artifactId>calculator</artifactId>
-            <version>1.0</version>
+            <version>${calculator.version}</version>
         </dependency>
         <dependency>
             <groupId>org.testng</groupId>
             <artifactId>testng</artifactId>
             <version>${testng.version}</version>
             <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.seleniumhq.selenium</groupId>
+            <artifactId>selenium-java</artifactId>
+            <version>${selenium-java.version}</version>
         </dependency>
     </dependencies>
 
@@ -38,7 +51,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
-                <version>3.0.0-M5</version>
+                <version>${maven-surefire.version}</version>
                 <configuration>
                     <suiteXmlFiles>
                         <suiteXmlFile>${testng.suite.file}</suiteXmlFile>
@@ -48,7 +61,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.8.1</version>
+                <version>${maven-comiler-plugin.version}</version>
                 <configuration>
                     <source>${java.version}</source>
                     <target>${java.version}</target>
@@ -57,7 +70,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-checkstyle-plugin</artifactId>
-                <version>3.1.2</version>
+                <version>${maven-checkstyle-plugin.version}</version>
                 <dependencies>
                     <dependency>
                         <groupId>com.puppycrawl.tools</groupId>
@@ -66,9 +79,7 @@
                     </dependency>
                 </dependencies>
                 <configuration>
-                    <configLocation>
-                        https://raw.githubusercontent.com/DmitryKhodakovsky/epam-test-auto-spring-2021/master/codestyle_checks.xml
-                    </configLocation>
+                    <configLocation>${checkstyle-config.url}</configLocation>
                     <includeTestSourceDirectory>true</includeTestSourceDirectory>
                     <violationSeverity>warning</violationSeverity>
                     <consoleOutput>true</consoleOutput>
@@ -106,6 +117,12 @@
             <id>allTests</id>
             <properties>
                 <testng.suite.file>${testng.configs.path}/allTestsSuite.xml</testng.suite.file>
+            </properties>
+        </profile>
+        <profile>
+            <id>hw2</id>
+            <properties>
+                <testng.suite.file>${testng.configs.path}/hw2/testsSuiteHw2.xml</testng.suite.file>
             </properties>
         </profile>
     </profiles>

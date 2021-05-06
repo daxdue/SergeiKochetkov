@@ -14,7 +14,7 @@ public class CalculatorMultTest {
     }
 
     @Test(groups = {Tags.MULT_DIV},
-            dataProvider = DataProviders.MUL_LONG_DATA_PROVIDER,
+            dataProvider = TestsDataProvider.MUL_LONG_DATA_PROVIDER,
             dataProviderClass = TestsDataProvider.class)
     public void calculatorCanExecuteMulOperationsWithLongArgs(long a, long b, long expected) {
         long actual = calculator.mult(a, b);
@@ -22,7 +22,7 @@ public class CalculatorMultTest {
     }
 
     @Test(groups = {Tags.MULT_DIV},
-            dataProvider = DataProviders.MUL_DOUBLE_DATA_PROVIDER,
+            dataProvider = TestsDataProvider.MUL_DOUBLE_DATA_PROVIDER,
             dataProviderClass = TestsDataProvider.class)
     public void calculatorCanExecuteMulOperationsWithDouble(double a, double b,
                                                             double expected, double accuracy) {

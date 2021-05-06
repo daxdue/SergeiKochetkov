@@ -1,6 +1,6 @@
 package ru.training.at.hw1;
 
-public interface Tags {
-    String ADD_SUB = "addSub";
-    String MULT_DIV = "multDiv";
+public class Tags {
+    public static final String ADD_SUB = "addSub";
+    public static final String MULT_DIV = "multDiv";
 }

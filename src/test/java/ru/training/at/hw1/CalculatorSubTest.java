@@ -14,7 +14,7 @@ public class CalculatorSubTest {
     }
 
     @Test(groups = {Tags.ADD_SUB},
-            dataProvider = DataProviders.SUB_LONG_DATA_PROVIDER,
+            dataProvider = TestsDataProvider.SUB_LONG_DATA_PROVIDER,
             dataProviderClass = TestsDataProvider.class)
     public void calculatorCanExecuteSubOperationsWithLongArguments(long a, long b, long expected) {
         long actual = calculator.sub(a, b);
@@ -22,7 +22,7 @@ public class CalculatorSubTest {
     }
 
     @Test(groups = {Tags.ADD_SUB},
-            dataProvider = DataProviders.SUB_DOUBLE_DATA_PROVIDER,
+            dataProvider = TestsDataProvider.SUB_DOUBLE_DATA_PROVIDER,
             dataProviderClass = TestsDataProvider.class)
     public void calculatorCanExecuteSubOperationsWithDouble(double a, double b,
                                                             double expected, double accuracy) {
