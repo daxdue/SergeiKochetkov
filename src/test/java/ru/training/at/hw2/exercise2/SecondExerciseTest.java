@@ -11,7 +11,7 @@ import org.testng.annotations.Test;
 
 import java.util.concurrent.TimeUnit;
 
-public class Exercise2 {
+public class SecondExerciseTest {
     WebDriver webDriver;
 
     /**
@@ -30,7 +30,6 @@ public class Exercise2 {
      */
     @Test(priority = 1)
     public void browserTitleTest() {
-        //webDriver.navigate().to("https://jdi-testing.github.io/jdi-light/index.html");
         Assert.assertEquals(webDriver.getTitle(), "Home Page");
     }
 
@@ -63,6 +62,7 @@ public class Exercise2 {
                 By.cssSelector("div#mCSB_1_container > ul > li:nth-child(3) > "
                         + "ul.sub > li:nth-child(8) > a"));
         diffElementsPageButton.click();
+        webDriver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
         Assert.assertEquals(webDriver.getTitle(), "Different Elements");
     }
 
@@ -118,7 +118,7 @@ public class Exercise2 {
     }
 
     /**
-     * Close webdriver.
+     * Close webdriver after all tests.
      */
     @AfterClass
     public void setDown() {

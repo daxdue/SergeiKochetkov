@@ -12,8 +12,9 @@ import org.testng.asserts.SoftAssert;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
-public class Exercise1 {
+public class FirstExerciseTest {
     WebDriver webDriver;
     SoftAssert softAssert;
 
@@ -25,6 +26,7 @@ public class Exercise1 {
         webDriver = new ChromeDriver();
         webDriver.manage().window().maximize();
         webDriver.navigate().to("https://jdi-testing.github.io/jdi-light/index.html");
+        webDriver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
         softAssert = new SoftAssert();
     }
 
@@ -45,12 +47,13 @@ public class Exercise1 {
         loginForm.click();
         WebElement username = webDriver.findElement(By.id("name"));
         WebElement pass = webDriver.findElement(By.id("password"));
-        WebElement loginButton = webDriver.findElement(By.id("login-button"));
         username.sendKeys("Roman");
         pass.sendKeys("Jdi1234");
+        WebElement loginButton = webDriver.findElement(By.id("login-button"));
         loginButton.click();
         WebElement name = webDriver.findElement(By.id("user-name"));
         softAssert.assertEquals(name.getText(), "ROMAN IOVLEV");
+        softAssert.assertAll();
     }
 
     /**
@@ -69,6 +72,7 @@ public class Exercise1 {
             itemsTitlesActual.add(webElement.getText());
         }
         softAssert.assertEquals(itemsTitlesActual, itemsTitlesExpected);
+        softAssert.assertAll();
     }
 
     /**
@@ -83,6 +87,7 @@ public class Exercise1 {
         for (WebElement benefitImage : benefitImages) {
             softAssert.assertTrue(benefitImage.isDisplayed());
         }
+        softAssert.assertAll();
     }
 
     /**
@@ -96,10 +101,11 @@ public class Exercise1 {
         for (WebElement benefitText : benefitTexts) {
             softAssert.assertTrue(benefitText.isDisplayed());
         }
+        softAssert.assertAll();
     }
 
     /**
-     * Assert iframe with exists.
+     * Assert iframe exists in page.
      */
     @Test(priority = 6)
     public void iframeExistingTest() {
@@ -118,6 +124,7 @@ public class Exercise1 {
         WebElement frameButton =  webDriver.findElement(By.id("frame-button"));
         softAssert.assertTrue(frameButton.isDisplayed());
         webDriver.switchTo().defaultContent();
+        softAssert.assertAll();
     }
 
     /**
@@ -139,75 +146,9 @@ public class Exercise1 {
         softAssert.assertAll();
     }
 
-    //@Test
-    public void exercise1() {
-        webDriver = new ChromeDriver();
-        webDriver.manage().window().maximize();
-        webDriver.navigate().to("https://jdi-testing.github.io/jdi-light/index.html");
-        softAssert.assertEquals(webDriver.getTitle(), "Home Page");
-        WebElement loginForm = webDriver.findElement(By.xpath("/html/body/header/div/nav/ul[2]"));
-        loginForm.click();
-        WebElement username = webDriver.findElement(By.id("name"));
-        WebElement pass = webDriver.findElement(By.id("password"));
-        WebElement loginButton = webDriver.findElement(By.id("login-button"));
-        username.sendKeys("Roman");
-        pass.sendKeys("Jdi1234");
-        loginButton.click();
-        WebElement name = webDriver.findElement(By.id("user-name"));
-        softAssert.assertEquals(name.getText(), "ROMAN IOVLEV");
-        List<WebElement> headerItems = webDriver
-                .findElements(By.xpath("//ul[@class='uui-navigation nav navbar-nav m-l8']/li"));
-
-        softAssert.assertEquals(headerItems.size(), 4);
-        List<String> itemsTitlesExpected = new ArrayList<>(Arrays.asList("HOME", "CONTACT FORM",
-                "SERVICE", "METALS & COLORS"));
-        List<String> itemsTitlesActual = new ArrayList<>();
-        for (WebElement webElement : headerItems) {
-            softAssert.assertTrue(webElement.isDisplayed());
-            itemsTitlesActual.add(webElement.getText());
-        }
-        softAssert.assertEquals(itemsTitlesActual, itemsTitlesExpected);
-
-        List<WebElement> imagesElements = webDriver
-                .findElements(By.xpath("//div[@class='benefit-icon']"));
-        for (WebElement imageElement : imagesElements) {
-            softAssert.assertTrue(imageElement.isDisplayed());
-        }
-        List<WebElement> benefitImages = webDriver
-                .findElements(By.cssSelector("div.benefit > div.benefit-icon:nth-child(1)"
-                        + " > span.icons-benefit"));
-        for (WebElement benefitImage : benefitImages) {
-            softAssert.assertTrue(benefitImage.isDisplayed());
-        }
-        List<WebElement> benefitTexts = webDriver
-                .findElements(By.cssSelector("div.benefit > span.benefit-txt:nth-child(2)"));
-        for (WebElement benefitText : benefitTexts) {
-            softAssert.assertTrue(benefitText.isDisplayed());
-        }
-
-        WebElement frame = webDriver.findElement(By.xpath("//iframe[@id='frame']"));
-        softAssert.assertTrue(frame.isDisplayed());
-        webDriver.switchTo().frame(frame);
-
-        WebElement frameButton =  webDriver.findElement(By.id("frame-button"));
-        softAssert.assertTrue(frameButton.isDisplayed());
-
-        webDriver.switchTo().defaultContent();
-
-        List<WebElement> sideBarItems = webDriver
-                .findElements(By.xpath("//div[@id='mCSB_1_container']/ul/li/a"));
-        softAssert.assertEquals(sideBarItems.size(), 5);
-        List<String> expectedSideBarItemsNames =
-                new ArrayList<>(Arrays.asList("Home", "Contact form", "Service",
-                "Metals & Colors", "Elements packs"));
-        List<String> actualSideBarItemsNames = new ArrayList<>();
-        for (WebElement sideBarItem : sideBarItems) {
-            actualSideBarItemsNames.add(sideBarItem.getText());
-        }
-        softAssert.assertEquals(actualSideBarItemsNames, expectedSideBarItemsNames);
-        softAssert.assertAll();
-    }
-
+    /**
+     * Close webdriver after all tests.
+     */
     @AfterClass
     public void setDown() {
         webDriver.close();

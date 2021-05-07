@@ -2,7 +2,8 @@
 <suite name="testsSuiteHw2">
     <test name="pageTest">
         <packages>
-            <package name="ru.training.at.hw2"/>
+            <package name="ru.training.at.hw2.exercise1"/>
+            <package name="ru.training.at.hw2.exercise2"/>
         </packages>
     </test>
 </suite>

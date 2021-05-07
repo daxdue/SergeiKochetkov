@@ -102,9 +102,9 @@
     <profiles>
         <profile>
             <id>addSubTests</id>
-            <activation>
+            <!--<activation>
                 <activeByDefault>true</activeByDefault>
-            </activation>
+            </activation>-->
             <properties>
                 <testng.suite.file>${testng.configs.path}/addSubTestsSuite.xml</testng.suite.file>
             </properties>
@@ -123,6 +123,9 @@
         </profile>
         <profile>
             <id>hw2</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
             <properties>
                 <testng.suite.file>${testng.configs.path}/hw2/testsSuiteHw2.xml</testng.suite.file>
             </properties>
