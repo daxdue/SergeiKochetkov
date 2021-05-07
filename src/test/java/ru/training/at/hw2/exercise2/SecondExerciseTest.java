@@ -1,66 +1,24 @@
 package ru.training.at.hw2.exercise2;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.Assert;
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
+import ru.training.at.hw2.BasePageTest;
 
 import java.util.concurrent.TimeUnit;
 
-public class SecondExerciseTest {
-    WebDriver webDriver;
-
-    /**
-     * Prepare parameters for tests.
-     */
-    @BeforeClass
-    public void setUp() {
-        webDriver = new ChromeDriver();
-        webDriver.manage().window().maximize();
-        webDriver.navigate().to("https://jdi-testing.github.io/jdi-light/index.html");
-        webDriver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
-    }
-
-    /**
-     * Assert browser title.
-     */
-    @Test(priority = 1)
-    public void browserTitleTest() {
-        Assert.assertEquals(webDriver.getTitle(), "Home Page");
-    }
-
-    /**
-     * Assert user name after user logged in.
-     */
-    @Test(priority = 2)
-    public void usernameTest() {
-        WebElement loginForm = webDriver.findElement(By.xpath("/html/body/header/div/nav/ul[2]"));
-        loginForm.click();
-        WebElement nameField = webDriver.findElement(By.id("name"));
-        nameField.sendKeys("Roman");
-        WebElement passwordField = webDriver.findElement(By.id("password"));
-        passwordField.sendKeys("Jdi1234");
-        WebElement enterButton = webDriver.findElement(By.id("login-button"));
-        enterButton.click();
-        WebElement name = webDriver.findElement(By.id("user-name"));
-        Assert.assertEquals(name.getText(), "ROMAN IOVLEV");
-    }
-
+public class SecondExerciseTest extends BasePageTest {
     /**
      * Assert opening Different Elements Page via Service sidebar item clicking.
      */
     @Test(priority = 3)
     public void openDifferentElementPageTest() {
-        WebElement serviceTab = webDriver.findElement(By.cssSelector("div#mCSB_1_container > "
-                + "ul > li:nth-child(3)"));
+        WebElement serviceTab = webDriver.findElement(
+                By.xpath("//a[contains(text(), 'Service')]"));
         serviceTab.click();
         WebElement diffElementsPageButton = webDriver.findElement(
-                By.cssSelector("div#mCSB_1_container > ul > li:nth-child(3) > "
-                        + "ul.sub > li:nth-child(8) > a"));
+                By.xpath("//a[contains(text(), 'Different elements')]"));
         diffElementsPageButton.click();
         webDriver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
         Assert.assertEquals(webDriver.getTitle(), "Different Elements");
@@ -71,12 +29,13 @@ public class SecondExerciseTest {
      */
     @Test(priority = 4)
     public void selectCheckboxesTest() {
-        WebElement waterCheckBox = webDriver.findElement(By.cssSelector("div.main-content-hg > "
-                + "div.checkbox-row:nth-child(2) > label:nth-child(1) > input"));
+        WebElement waterCheckBox = webDriver.findElement(By.cssSelector(
+                "label.label-checkbox:nth-child(1) > input"));
         waterCheckBox.click();
         Assert.assertTrue(waterCheckBox.isSelected());
-        WebElement windCheckBox = webDriver.findElement(By.cssSelector("div.main-content-hg > "
-                + "div.checkbox-row:nth-child(2) > label:nth-child(3) > input"));
+        WebElement windCheckBox = webDriver.findElement(By.cssSelector(
+                "label.label-checkbox:nth-child(3) > input"
+        ));
         windCheckBox.click();
         Assert.assertTrue(windCheckBox.isSelected());
 
@@ -94,8 +53,9 @@ public class SecondExerciseTest {
      */
     @Test(priority = 5)
     public void selectRadioTest() {
-        WebElement selenRadio = webDriver.findElement(By.cssSelector("div.main-content-hg > "
-                + "div.checkbox-row:nth-child(3) > label:nth-child(4) > input"));
+        WebElement selenRadio = webDriver.findElement(By.cssSelector(
+                "label.label-radio:nth-child(4) > input"
+        ));
         selenRadio.click();
         Assert.assertTrue(selenRadio.isSelected());
         WebElement selenRadioLog = webDriver.findElement(By.xpath("//li[contains(text(), "
@@ -108,21 +68,12 @@ public class SecondExerciseTest {
      */
     @Test(priority = 6)
     public void selectDropdownTest() {
-        WebElement yellowColorItem = webDriver.findElement(By.cssSelector("div.main-content-hg >"
-                + " div.colors > select > option:nth-child(4)"));
+        WebElement yellowColorItem = webDriver.findElement(
+                By.xpath("//option[contains(text(), 'Yellow')]"));
         yellowColorItem.click();
         Assert.assertTrue(yellowColorItem.isSelected());
         WebElement colorLog = webDriver.findElement(By.xpath("//li[contains(text(), "
                 + "'Colors')]"));
         Assert.assertTrue(colorLog.getText().contains("Colors: value changed to Yellow"));
     }
-
-    /**
-     * Close webdriver after all tests.
-     */
-    @AfterClass
-    public void setDown() {
-        webDriver.close();
-    }
-
 }
