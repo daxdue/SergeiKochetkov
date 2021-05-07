@@ -1,68 +1,22 @@
 package ru.training.at.hw2.exercise1;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
-import org.testng.asserts.SoftAssert;
+import ru.training.at.hw2.BasePageTest;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
-public class FirstExerciseTest {
-    WebDriver webDriver;
-    SoftAssert softAssert;
-
-    /**
-     * Prepare parameters for tests.
-     */
-    @BeforeClass
-    public void setUp() {
-        webDriver = new ChromeDriver();
-        webDriver.manage().window().maximize();
-        webDriver.navigate().to("https://jdi-testing.github.io/jdi-light/index.html");
-        webDriver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
-        softAssert = new SoftAssert();
-    }
-
-    /**
-     * Assert browser title.
-     */
-    @Test(priority = 1)
-    public void browserTitleTest() {
-        softAssert.assertEquals(webDriver.getTitle(), "Home Page");
-    }
-
-    /**
-     * Assert user name after user logged in.
-     */
-    @Test(priority = 2)
-    public void loginUserTest() {
-        WebElement loginForm = webDriver.findElement(By.xpath("/html/body/header/div/nav/ul[2]"));
-        loginForm.click();
-        WebElement username = webDriver.findElement(By.id("name"));
-        WebElement pass = webDriver.findElement(By.id("password"));
-        username.sendKeys("Roman");
-        pass.sendKeys("Jdi1234");
-        WebElement loginButton = webDriver.findElement(By.id("login-button"));
-        loginButton.click();
-        WebElement name = webDriver.findElement(By.id("user-name"));
-        softAssert.assertEquals(name.getText(), "ROMAN IOVLEV");
-        softAssert.assertAll();
-    }
-
+public class FirstExerciseTest extends BasePageTest {
     /**
      * Assert header items names.
      */
     @Test(priority = 3)
     public void headerItemsNamesTest() {
         List<WebElement> headerItems = webDriver
-                .findElements(By.xpath("//ul[@class='uui-navigation nav navbar-nav m-l8']/li"));
+                .findElements(By.cssSelector("ul.nav > li"));
         softAssert.assertEquals(headerItems.size(), 4);
         List<String> itemsTitlesExpected = new ArrayList<>(Arrays.asList("HOME", "CONTACT FORM",
                 "SERVICE", "METALS & COLORS"));
@@ -81,8 +35,7 @@ public class FirstExerciseTest {
     @Test(priority = 4)
     public void imagesAmountTest() {
         List<WebElement> benefitImages = webDriver
-                .findElements(By.cssSelector("div.benefit > div.benefit-icon:nth-child(1)"
-                        + " > span.icons-benefit"));
+                .findElements(By.cssSelector("span.icons-benefit"));
         softAssert.assertEquals(benefitImages.size(), 4);
         for (WebElement benefitImage : benefitImages) {
             softAssert.assertTrue(benefitImage.isDisplayed());
@@ -96,7 +49,7 @@ public class FirstExerciseTest {
     @Test(priority = 5)
     public void textsAmountTest() {
         List<WebElement> benefitTexts = webDriver
-                .findElements(By.cssSelector("div.benefit > span.benefit-txt:nth-child(2)"));
+                .findElements(By.cssSelector("span.benefit-txt:nth-child(2)"));
         softAssert.assertEquals(benefitTexts.size(), 4);
         for (WebElement benefitText : benefitTexts) {
             softAssert.assertTrue(benefitText.isDisplayed());
@@ -133,7 +86,7 @@ public class FirstExerciseTest {
     @Test(priority = 8)
     public void sidebarElementsExistingTest() {
         List<WebElement> sideBarItems = webDriver
-                .findElements(By.xpath("//div[@id='mCSB_1_container']/ul/li/a"));
+                .findElements(By.cssSelector("ul.sidebar-menu > li > a"));
         softAssert.assertEquals(sideBarItems.size(), 5);
         List<String> expectedSideBarItemsNames =
                 new ArrayList<>(Arrays.asList("Home", "Contact form", "Service",
@@ -145,13 +98,4 @@ public class FirstExerciseTest {
         softAssert.assertEquals(actualSideBarItemsNames, expectedSideBarItemsNames);
         softAssert.assertAll();
     }
-
-    /**
-     * Close webdriver after all tests.
-     */
-    @AfterClass
-    public void setDown() {
-        webDriver.close();
-    }
-
 }
