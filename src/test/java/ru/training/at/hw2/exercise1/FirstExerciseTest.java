@@ -10,6 +10,8 @@ import java.util.Arrays;
 import java.util.List;
 
 public class FirstExerciseTest extends BasePageTest {
+    private WebElement frameElement;
+
     /**
      * Assert header items names.
      */
@@ -48,12 +50,34 @@ public class FirstExerciseTest extends BasePageTest {
      */
     @Test(priority = 5)
     public void textsAmountTest() {
-        List<WebElement> benefitTexts = webDriver
-                .findElements(By.cssSelector("span.benefit-txt:nth-child(2)"));
-        softAssert.assertEquals(benefitTexts.size(), 4);
-        for (WebElement benefitText : benefitTexts) {
-            softAssert.assertTrue(benefitText.isDisplayed());
+        String xpathPattern = "//span[contains(@class,'%s')]/following::span[1]";
+        List<String> benefitsValues = new ArrayList<>(Arrays.asList(
+                "To include good practices\n"
+                        + "and ideas from successful\n"
+                        + "EPAM project",
+                "To be flexible and\n"
+                        + "customizable",
+                "To be multiplatform",
+                "Already have good base\n"
+                        + "(about 20 internal and\n"
+                        + "some external projects),\n"
+                        + "wish to get more…"
+        ));
+        List<String> iconsClasses = new ArrayList<>(Arrays.asList(
+                "icon-practise",
+                "icon-custom",
+                "icon-multi",
+                "icon-base"
+        ));
+
+        List<String> actualTextValues = new ArrayList<>();
+        for (String classType : iconsClasses) {
+            String elementXpath = String.format(xpathPattern, classType);
+            WebElement benefitElement = webDriver.findElement(By.xpath(elementXpath));
+            actualTextValues.add(benefitElement.getText());
         }
+        softAssert.assertEquals(actualTextValues.size(), 4);
+        softAssert.assertEquals(actualTextValues, benefitsValues);
         softAssert.assertAll();
     }
 
@@ -62,8 +86,8 @@ public class FirstExerciseTest extends BasePageTest {
      */
     @Test(priority = 6)
     public void iframeExistingTest() {
-        WebElement frame = webDriver.findElement(By.xpath("//iframe[@id='frame']"));
-        softAssert.assertTrue(frame.isDisplayed());
+        frameElement = webDriver.findElement(By.id("frame"));
+        softAssert.assertTrue(frameElement.isDisplayed());
     }
 
     /**
@@ -71,9 +95,8 @@ public class FirstExerciseTest extends BasePageTest {
      */
     @Test(priority = 7)
     public void frameButtonExistingTest() {
-        WebElement frame = webDriver.findElement(By.xpath("//iframe[@id='frame']"));
-        softAssert.assertTrue(frame.isDisplayed());
-        webDriver.switchTo().frame(frame);
+        softAssert.assertTrue(frameElement.isDisplayed());
+        webDriver.switchTo().frame(frameElement);
         WebElement frameButton =  webDriver.findElement(By.id("frame-button"));
         softAssert.assertTrue(frameButton.isDisplayed());
         webDriver.switchTo().defaultContent();
@@ -85,16 +108,17 @@ public class FirstExerciseTest extends BasePageTest {
      */
     @Test(priority = 8)
     public void sidebarElementsExistingTest() {
-        List<WebElement> sideBarItems = webDriver
-                .findElements(By.cssSelector("ul.sidebar-menu > li > a"));
-        softAssert.assertEquals(sideBarItems.size(), 5);
+        final String xpathPattern = "//span[contains(text(), '%s')]";
         List<String> expectedSideBarItemsNames =
                 new ArrayList<>(Arrays.asList("Home", "Contact form", "Service",
                         "Metals & Colors", "Elements packs"));
         List<String> actualSideBarItemsNames = new ArrayList<>();
-        for (WebElement sideBarItem : sideBarItems) {
-            actualSideBarItemsNames.add(sideBarItem.getText());
+        for (String textToFind : expectedSideBarItemsNames) {
+            String elementXpath = String.format(xpathPattern, textToFind);
+            WebElement sidebarElement = webDriver.findElement(By.xpath(elementXpath));
+            actualSideBarItemsNames.add(sidebarElement.getText());
         }
+        softAssert.assertEquals(actualSideBarItemsNames.size(), 5);
         softAssert.assertEquals(actualSideBarItemsNames, expectedSideBarItemsNames);
         softAssert.assertAll();
     }
