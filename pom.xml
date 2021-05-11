@@ -25,6 +25,7 @@
         <checkstyle-config.url>
             https://raw.githubusercontent.com/DmitryKhodakovsky/epam-test-auto-spring-2021/master/codestyle_checks.xml
         </checkstyle-config.url>
+        <wdm.version>4.4.1</wdm.version>
     </properties>
 
     <dependencies>
@@ -45,6 +46,12 @@
             <groupId>org.seleniumhq.selenium</groupId>
             <artifactId>selenium-java</artifactId>
             <version>${selenium-java.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.github.bonigarcia</groupId>
+            <artifactId>webdrivermanager</artifactId>
+            <version>${wdm.version}</version>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 
@@ -102,9 +109,6 @@
     <profiles>
         <profile>
             <id>addSubTests</id>
-            <activation>
-                <activeByDefault>true</activeByDefault>
-            </activation>
             <properties>
                 <testng.suite.file>${testng.configs.path}/addSubTestsSuite.xml</testng.suite.file>
             </properties>
@@ -123,6 +127,9 @@
         </profile>
         <profile>
             <id>hw2</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
             <properties>
                 <testng.suite.file>${testng.configs.path}/hw2/testsSuiteHw2.xml</testng.suite.file>
             </properties>
