@@ -23,12 +23,6 @@ public class JdiMainPage extends BaseJdiPage {
         super(webDriver);
         this.webDriver = webDriver;
         PageFactory.initElements(webDriver, this);
-        sidebar = new Sidebar(webDriver);
-        header = new Header(webDriver);
-    }
-
-    public String getBrowserTitle() {
-        return webDriver.getTitle();
     }
 
     public void verifyLoggedUserName(String expectedValue) {
@@ -92,5 +86,4 @@ public class JdiMainPage extends BaseJdiPage {
         }
         softAssert.assertAll();
     }
-
 }

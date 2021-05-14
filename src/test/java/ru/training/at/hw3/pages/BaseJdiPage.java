@@ -45,4 +45,8 @@ public abstract class BaseJdiPage {
         header.getDifferentElementsSubItem().click();
         Assert.assertEquals(webDriver.getTitle(), "Different Elements");
     }
+
+    public void verifyBrowserName(String requiredBrowserName) {
+        Assert.assertEquals(webDriver.getTitle(), requiredBrowserName);
+    }
 }
