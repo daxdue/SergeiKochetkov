@@ -26,6 +26,8 @@
             https://raw.githubusercontent.com/DmitryKhodakovsky/epam-test-auto-spring-2021/master/codestyle_checks.xml
         </checkstyle-config.url>
         <wdm.version>4.4.1</wdm.version>
+        <lombok.version>1.18.20</lombok.version>
+        <guice.version>5.0.1</guice.version>
     </properties>
 
     <dependencies>
@@ -53,6 +55,19 @@
             <version>${wdm.version}</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>${lombok.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.google.inject</groupId>
+            <artifactId>guice</artifactId>
+            <version>${guice.version}</version>
+        </dependency>
+
+
     </dependencies>
 
     <build>
@@ -127,11 +142,17 @@
         </profile>
         <profile>
             <id>hw2</id>
+            <properties>
+                <testng.suite.file>${testng.configs.path}/hw2/testsSuiteHw2.xml</testng.suite.file>
+            </properties>
+        </profile>
+        <profile>
+            <id>hw3</id>
             <activation>
                 <activeByDefault>true</activeByDefault>
             </activation>
             <properties>
-                <testng.suite.file>${testng.configs.path}/hw2/testsSuiteHw2.xml</testng.suite.file>
+                <testng.suite.file>${testng.configs.path}/hw3/testsSuiteHw3.xml</testng.suite.file>
             </properties>
         </profile>
     </profiles>
