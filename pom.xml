@@ -8,6 +8,25 @@
     <artifactId>test-auto-hw</artifactId>
     <version>1.0-SNAPSHOT</version>
 
+    <repositories>
+        <repository>
+            <releases>
+                <enabled>false</enabled>
+                <updatePolicy>always</updatePolicy>
+                <checksumPolicy>warn</checksumPolicy>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+                <updatePolicy>never</updatePolicy>
+                <checksumPolicy>fail</checksumPolicy>
+            </snapshots>
+            <name>Nexus Snapshots</name>
+            <id>snapshots-repo</id>
+            <url>http://repo1.maven.org/maven2</url>
+            <layout>default</layout>
+        </repository>
+    </repositories>
+
     <properties>
         <java.version>1.8</java.version>
         <calculator.version>1.0</calculator.version>
@@ -18,6 +37,8 @@
         <maven-comiler-plugin.version>3.8.1</maven-comiler-plugin.version>
         <maven-checkstyle-plugin.version>3.1.2</maven-checkstyle-plugin.version>
         <checkstyle.version>8.41.1</checkstyle.version>
+        <slf4j-simple.version>1.7.30</slf4j-simple.version>
+        <commons-io.version>2.8.0</commons-io.version>
         <selenium-java.version>3.141.59</selenium-java.version>
         <testng.version>7.4.0</testng.version>
         <testng.configs.path>${project.build.testSourceDirectory}/resources</testng.configs.path>
@@ -28,6 +49,8 @@
         <wdm.version>4.4.1</wdm.version>
         <lombok.version>1.18.20</lombok.version>
         <guice.version>5.0.1</guice.version>
+        <aspectj.version>1.9.6</aspectj.version>
+        <allure-testng.version>2.13.2</allure-testng.version>
     </properties>
 
     <dependencies>
@@ -39,10 +62,19 @@
             <systemPath>${project.basedir}/src/main/resources/calculator-1.0.jar</systemPath>
         </dependency>
         <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-simple</artifactId>
+            <version>${slf4j-simple.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>${commons-io.version}</version>
+        </dependency>
+        <dependency>
             <groupId>org.testng</groupId>
             <artifactId>testng</artifactId>
             <version>${testng.version}</version>
-            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.seleniumhq.selenium</groupId>
@@ -53,7 +85,6 @@
             <groupId>io.github.bonigarcia</groupId>
             <artifactId>webdrivermanager</artifactId>
             <version>${wdm.version}</version>
-            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>
@@ -66,8 +97,11 @@
             <artifactId>guice</artifactId>
             <version>${guice.version}</version>
         </dependency>
-
-
+        <dependency>
+            <groupId>io.qameta.allure</groupId>
+            <artifactId>allure-testng</artifactId>
+            <version>${allure-testng.version}</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -80,7 +114,23 @@
                     <suiteXmlFiles>
                         <suiteXmlFile>${testng.suite.file}</suiteXmlFile>
                     </suiteXmlFiles>
+                    <argLine>
+                        -javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar"
+                    </argLine>
+                    <systemProperties>
+                        <property>
+                            <name>allure.results.directory</name>
+                            <value>${project.build.directory}/allure-results</value>
+                        </property>
+                    </systemProperties>
                 </configuration>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.aspectj</groupId>
+                        <artifactId>aspectjweaver</artifactId>
+                        <version>${aspectj.version}</version>
+                    </dependency>
+                </dependencies>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -121,6 +171,20 @@
         </plugins>
     </build>
 
+    <reporting>
+        <excludeDefaults>true</excludeDefaults>
+        <plugins>
+            <plugin>
+                <groupId>io.qameta.allure</groupId>
+                <artifactId>allure-maven</artifactId>
+                <version>2.10.0</version>
+                <configuration>
+                    <reportVersion>${allure-testng.version}</reportVersion>
+                </configuration>
+            </plugin>
+        </plugins>
+    </reporting>
+
     <profiles>
         <profile>
             <id>addSubTests</id>
@@ -148,11 +212,23 @@
         </profile>
         <profile>
             <id>hw3</id>
+            <properties>
+                <testng.suite.file>${testng.configs.path}/hw3/testsSuiteHw3.xml</testng.suite.file>
+            </properties>
+        </profile>
+        <profile>
+            <id>hw4</id>
             <activation>
                 <activeByDefault>true</activeByDefault>
             </activation>
             <properties>
-                <testng.suite.file>${testng.configs.path}/hw3/testsSuiteHw3.xml</testng.suite.file>
+                <testng.suite.file>${testng.configs.path}/hw4/testSuiteHw4.xml</testng.suite.file>
+            </properties>
+        </profile>
+        <profile>
+            <id>hw4_2</id>
+            <properties>
+                <testng.suite.file>${testng.configs.path}/hw4/testSuiteHw4_2.xml</testng.suite.file>
             </properties>
         </profile>
     </profiles>
