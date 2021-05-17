@@ -218,9 +218,6 @@
         </profile>
         <profile>
             <id>hw4</id>
-            <!--<activation>
-                <activeByDefault>true</activeByDefault>
-            </activation>-->
             <properties>
                 <testng.suite.file>${testng.configs.path}/hw4/testSuiteHw4.xml</testng.suite.file>
             </properties>
