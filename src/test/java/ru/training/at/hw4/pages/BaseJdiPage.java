@@ -32,12 +32,12 @@ public abstract class BaseJdiPage {
         sidebar = new Sidebar(webDriver);
     }
 
-    @Step("Open page")
+    @Step("I open Main page")
     public void openPage() {
         webDriver.get(URL);
     }
 
-    @Step("Type username and password and click login btn")
+    @Step("I type username and password into input fields and click 'login' button")
     public void login(String username, String password) {
         loginIcon.click();
         usernameField.sendKeys(username);
@@ -45,18 +45,18 @@ public abstract class BaseJdiPage {
         loginButton.click();
     }
 
-    @Step("Open 'Different Elements' page")
+    @Step("I click on 'Different Elements' button in Header")
     public void openDifferentElementsPage() {
         header.getServiceItem().click();
         header.getDifferentElementsSubItem().click();
     }
 
-    @Step("Verify browser name")
+    @Step("I view required browser title")
     public void verifyBrowserName(String requiredBrowserName) {
         Assert.assertEquals(webDriver.getTitle(), requiredBrowserName);
     }
 
-    @Step("Verify logged username")
+    @Step("I see required user name")
     public void verifyLoggedUserName(String expectedValue) {
         Assert.assertEquals(loggedUserName.getText(), expectedValue);
     }

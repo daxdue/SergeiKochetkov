@@ -35,52 +35,53 @@ public class JdiElementsPage extends BaseJdiPage {
         dropdown = new Dropdown(webDriver);
     }
 
-    @Step("Select 'Water' checkbox")
+    @Step("I click 'Water' checkbox")
     public void selectWaterCheckbox() {
         checkbox.getWaterCheckBox().click();
         softAssert.assertTrue(checkbox.getWaterCheckBox().isSelected());
     }
 
-    @Step("Select 'Wind' checkbox")
+    @Step("I click 'Wind' checkbox")
     public void selectWindCheckbox() {
         checkbox.getWindCheckBox().click();
         softAssert.assertTrue(checkbox.getWindCheckBox().isSelected());
     }
 
-    @Step("Select 'Selen' radio button")
+    @Step("I click 'Selen' radio button")
     public void selectSelenRadioButton() {
         radioButtons.getSelenRadioButton().click();
         softAssert.assertTrue(radioButtons.getSelenRadioButton().isSelected());
     }
 
+    @Step("I click color dropdown and click 'Yellow' color")
     public void selectYellowDropdownOption() {
         dropdown.click();
         dropdown.getYellowOption().click();
         softAssert.assertTrue(dropdown.getYellowOption().isSelected());
     }
 
-    @Step("Verify 'Water' checkbox log")
+    @Step("I view 'Water' checkbox log in log block")
     public void verifyWaterCheckboxLog() {
         softAssert.assertTrue(!waterCheckboxLogs.isEmpty());
         softAssert.assertTrue(waterCheckboxLogs.get(0).getText().contains(WATER_LOGS_PATTERN));
         softAssert.assertAll();
     }
 
-    @Step("Verify 'Wind' checkbox log")
+    @Step("I view 'Wind' checkbox log in log block")
     public void verifyWindCheckboxLog() {
         softAssert.assertTrue(!windCheckboxLogs.isEmpty());
         softAssert.assertTrue(windCheckboxLogs.get(0).getText().contains(WIND_LOGS_PATTERN));
         softAssert.assertAll();
     }
 
-    @Step("Verify 'Selen' radio button log")
+    @Step("I view 'Selen' radio button log in log block")
     public void verifySelenRadiobuttonLog() {
         softAssert.assertTrue(!selenRadiobuttonLogs.isEmpty());
         softAssert.assertTrue(selenRadiobuttonLogs.get(0).getText().contains(SELEN_LOGS_PATTERN));
         softAssert.assertAll();
     }
 
-    @Step("Verify dropdown elements log")
+    @Step("I view 'Yellow' dropdown element log in log block")
     public void verifyDropdownElementsLog() {
         softAssert.assertTrue(!dropdownElementsLogs.isEmpty());
         softAssert.assertTrue(dropdownElementsLogs.get(0).getText().contains(COLORS_LOGS_PATTERN));

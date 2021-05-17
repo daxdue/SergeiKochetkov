@@ -24,12 +24,12 @@ public class JdiMainPage extends BaseJdiPage {
         PageFactory.initElements(webDriver, this);
     }
 
-    @Step("Verify quantity of header items")
+    @Step("I view Header items on the page")
     public void verifyHeaderItemsQuantity(int expectedQuantity) {
         Assert.assertEquals(header.getHeaderElements().size(), expectedQuantity);
     }
 
-    @Step("Check the header items titles equals the required titles")
+    @Step("I view required content in Header items")
     public void verifyHeaderItemsTitles(List<String> expectedTitles) {
         List<WebElement> headerElements = header.getHeaderElements();
         Assert.assertEquals(headerElements.size(), expectedTitles.size());
@@ -39,12 +39,12 @@ public class JdiMainPage extends BaseJdiPage {
         }
     }
 
-    @Step("Check images quantity")
+    @Step("I view required amount of images on the page")
     public void verifyImagesQuantity(int expectedQuantity) {
         Assert.assertEquals(benefitsImages.size(), expectedQuantity);
     }
 
-    @Step("Check images displaying")
+    @Step("I view that images are displayed on the page")
     public void verifyImagesDisplaying() {
         for (WebElement image : benefitsImages) {
             softAssert.assertTrue(image.isDisplayed());
@@ -52,12 +52,12 @@ public class JdiMainPage extends BaseJdiPage {
         softAssert.assertAll();
     }
 
-    @Step("Check benefits texts quantity")
+    @Step("I view required amount of text blocks on the page")
     public void verifyBenefitsTextQuantity(int expectedQuantity) {
         Assert.assertEquals(benefitsTexts.size(), expectedQuantity);
     }
 
-    @Step("Check the benefits text contents equals the required contents")
+    @Step("I view required content in the text blocks on the page")
     public void verifyBenefitsTextContent(List<String> expectedContents) {
         for (String textContent : expectedContents) {
             WebElement actualContent = benefitsTexts.stream()
@@ -69,34 +69,34 @@ public class JdiMainPage extends BaseJdiPage {
         softAssert.assertAll();
     }
 
-    @Step("Check displaying of frame element")
+    @Step("I view frame element on the page")
     public void verifyFrameElementDisplayed() {
         Assert.assertTrue(frameElement.isDisplayed());
     }
 
-    @Step("Check displaying of frame button")
+    @Step("I view a button on the frame")
     public void verifyFrameButtonDisplayed() {
         WebElement frameButton = webDriver.findElement(By.id("frame-button"));
         softAssert.assertTrue(frameButton.isDisplayed());
         softAssert.assertAll();
     }
 
-    @Step("Switch to iframe")
+    @Step("I switch to the frame")
     public void switchToIframe() {
         webDriver.switchTo().frame(frameElement);
     }
 
-    @Step("Switch to main content")
+    @Step("I switch to the main content")
     public void switchToMainContent() {
         webDriver.switchTo().defaultContent();
     }
 
-    @Step("Check quantity of sidebar elements")
+    @Step("I view required amount of sidebar items on the page")
     public void verifySidebarElementsQuantity(int requiredQuantity) {
         Assert.assertEquals(sidebar.getSidebarElements().size(), requiredQuantity);
     }
 
-    @Step("Check the sidebar elements titles equals the required titles")
+    @Step("I view required content in Sidebar items")
     public void verifySidebarElements(List<String> expectedItems) {
         List<WebElement> sidebarElements = sidebar.getSidebarElements();
         for (String itemText : expectedItems) {

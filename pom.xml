@@ -218,15 +218,18 @@
         </profile>
         <profile>
             <id>hw4</id>
-            <activation>
+            <!--<activation>
                 <activeByDefault>true</activeByDefault>
-            </activation>
+            </activation>-->
             <properties>
                 <testng.suite.file>${testng.configs.path}/hw4/testSuiteHw4.xml</testng.suite.file>
             </properties>
         </profile>
         <profile>
             <id>hw4_2</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
             <properties>
                 <testng.suite.file>${testng.configs.path}/hw4/testSuiteHw4_2.xml</testng.suite.file>
             </properties>

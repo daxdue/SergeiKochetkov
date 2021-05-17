@@ -33,7 +33,7 @@ public abstract class BaseTest {
 
     @Test(priority = 1)
     @Description("This test checks browser title")
-    @Story("Actions with pages")
+    @Story("As a user I can view right browser title")
     public void browserTitleTest() {
         jdiMainPage.openPage();
         jdiMainPage.verifyBrowserName("Home Page");
@@ -41,7 +41,7 @@ public abstract class BaseTest {
 
     @Test(priority = 2)
     @Description("This test checks user's ability to login")
-    @Story("Login")
+    @Story("As a user I can login into System")
     public void performLoginTest() {
         jdiMainPage.login(propertyManager.getUsername(),
                 propertyManager.getPassword());
