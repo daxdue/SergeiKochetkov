@@ -52,6 +52,8 @@
         <aspectj.version>1.9.6</aspectj.version>
         <allure-testng.version>2.13.2</allure-testng.version>
         <cucumber.version>6.9.1</cucumber.version>
+        <jdi-light-html.version>1.3.12</jdi-light-html.version>
+        <gson.version>2.8.6</gson.version>
     </properties>
 
     <dependencies>
@@ -112,6 +114,16 @@
             <groupId>io.cucumber</groupId>
             <artifactId>cucumber-java</artifactId>
             <version>${cucumber.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.epam.jdi</groupId>
+            <artifactId>jdi-light-html</artifactId>
+            <version>${jdi-light-html.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+            <version>${gson.version}</version>
         </dependency>
     </dependencies>
 
@@ -241,11 +253,17 @@
         </profile>
         <profile>
             <id>hw5</id>
+            <properties>
+                <testng.suite.file>${testng.configs.path}/hw5/testSuiteHw5.xml</testng.suite.file>
+            </properties>
+        </profile>
+        <profile>
             <activation>
                 <activeByDefault>true</activeByDefault>
             </activation>
+            <id>hw6</id>
             <properties>
-                <testng.suite.file>${testng.configs.path}/hw5/testSuiteHw5.xml</testng.suite.file>
+                <testng.suite.file>${testng.configs.path}/hw6/testSuiteHw6.xml</testng.suite.file>
             </properties>
         </profile>
     </profiles>
