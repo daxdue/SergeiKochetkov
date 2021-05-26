@@ -3,40 +3,33 @@ package ru.training.hw6.sections;
 import com.epam.jdi.light.elements.common.Label;
 import com.epam.jdi.light.elements.pageobjects.annotations.FindBy;
 
-import java.util.List;
-
 public class ResultSection {
 
-    @FindBy(xpath = "//li[@class='summ-res']")
-    protected static Label summaryRes;
+    @FindBy(css = "li.summ-res")
+    public Label summaryRes;
 
-    @FindBy(xpath = "//li[@class='col-res']")
-    private static Label colorRes;
+    @FindBy(css = "li.col-res")
+    private Label colorRes;
 
-    @FindBy(xpath = "//li[@class='met-res']")
-    private static Label metalRes;
+    @FindBy(css = "li.met-res")
+    private Label metalRes;
 
-    @FindBy(xpath = "//li[@class='sal-res']")
-    private static Label vegetablesRes;
+    @FindBy(css = "li.sal-res")
+    private Label vegetablesRes;
 
-    public boolean verifySummaryRes(int required) {
-        return summaryRes.getValue().contains(String.valueOf(required));
+    public String getSummaryRes() {
+        return summaryRes.getValue();
     }
 
-    public boolean verifyColorRes(String required) {
-        return colorRes.getValue().contains(required);
+    public String getColorRes() {
+        return colorRes.getValue();
     }
 
-    public boolean verifyMetalRes(String required) {
-        return metalRes.getValue().contains(required);
+    public String getMetalRes() {
+        return metalRes.getValue();
     }
 
-    public boolean verifyVegetables(List<String> required) {
-        for (String vegetable : required) {
-            if (!vegetablesRes.getValue().contains(vegetable)) {
-                return false;
-            }
-        }
-        return true;
+    public String getVegetablesRes() {
+        return vegetablesRes.getValue();
     }
 }

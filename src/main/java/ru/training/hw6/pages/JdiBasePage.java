@@ -4,6 +4,7 @@ import com.epam.jdi.light.elements.complex.Menu;
 import com.epam.jdi.light.elements.composite.WebPage;
 import com.epam.jdi.light.elements.pageobjects.annotations.FindBy;
 import com.epam.jdi.light.ui.html.elements.common.Icon;
+import com.epam.jdi.light.ui.html.elements.common.Text;
 
 public class JdiBasePage extends WebPage {
 
@@ -13,8 +14,11 @@ public class JdiBasePage extends WebPage {
     @FindBy(id = "user-icon")
     public Icon loginIcon;
 
-    public void clickMetalsColors() {
-        headerMenu.get("Metals & Colors").click();
+    @FindBy(id = "user-name")
+    public Text loggedInUserName;
+
+    public String getLoggedUserName() {
+        return loggedInUserName.getValue();
     }
 
     public void clickHeaderElement(int element) {

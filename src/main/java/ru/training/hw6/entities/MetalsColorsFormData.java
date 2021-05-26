@@ -7,10 +7,11 @@ import java.util.List;
 
 @Data
 @NoArgsConstructor
-public class TestData {
+public class MetalsColorsFormData {
     private List<Integer> summary;
     private List<String> elements;
     private String color;
     private String metals;
     private List<String> vegetables;
+
 }

@@ -4,7 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.stream.JsonReader;
 import org.testng.annotations.DataProvider;
-import ru.training.hw6.entities.TestData;
+import ru.training.hw6.entities.MetalsColorsFormData;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -19,28 +19,28 @@ public class DataSource {
     private static final String JSON_TEST_DATA_FILE_PATH =
             "src/test/java/resources/hw6/JDI_ex8_metalsColorsDataSet.json";
 
-    private List<TestData> load() {
-        List<TestData> testDataList = new ArrayList<>();
+    private List<MetalsColorsFormData> load() {
+        List<MetalsColorsFormData> metalsColorsFormDataList = new ArrayList<>();
         try (InputStream inputStream = new FileInputStream(JSON_TEST_DATA_FILE_PATH)) {
             JsonReader reader = new JsonReader(new InputStreamReader(inputStream, "UTF-8"));
             GsonBuilder builder = new GsonBuilder();
             Map<String, Object> map = builder.create().fromJson(reader, Object.class);
             for (Map.Entry<String, Object> entry : map.entrySet()) {
-                TestData testData = new Gson().fromJson(entry.getValue().toString(),
-                        TestData.class);
-                testDataList.add(testData);
+                MetalsColorsFormData metalsColorsFormData = new Gson().fromJson(
+                        entry.getValue().toString(), MetalsColorsFormData.class);
+                metalsColorsFormDataList.add(metalsColorsFormData);
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return testDataList;
+        return metalsColorsFormDataList;
     }
 
-    @DataProvider(name = DataProviders.JSON_DATA_PROVIDER)
-    public Object[][] dataProvider() {
-        List<TestData> testDataList = load();
-        return testDataList.stream()
-                .map(data -> new TestData[]{data})
+    @DataProvider(name = MetalsColorsFormDataProviders.JSON_DATA_PROVIDER)
+    public Object[][] metalsColorsFormDataProvider() {
+        List<MetalsColorsFormData> metalsColorsFormDataList = load();
+        return metalsColorsFormDataList.stream()
+                .map(data -> new MetalsColorsFormData[]{data})
                 .toArray(Object[][]::new);
     }
 }

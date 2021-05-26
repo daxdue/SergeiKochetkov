@@ -8,9 +8,9 @@ import com.epam.jdi.light.elements.pageobjects.annotations.locators.JDropdown;
 import com.epam.jdi.light.elements.pageobjects.annotations.locators.UI;
 import com.epam.jdi.light.ui.html.elements.common.Button;
 import com.epam.jdi.light.ui.html.elements.complex.RadioButtons;
-import ru.training.hw6.entities.TestData;
+import ru.training.hw6.entities.MetalsColorsFormData;
 
-public class MetalsColorsForm extends Form<TestData> {
+public class MetalsColorsForm extends Form<MetalsColorsFormData> {
 
     @FindBy(name = "custom_radio_odd")
     private static RadioButtons oddRadioButtons;
@@ -43,18 +43,18 @@ public class MetalsColorsForm extends Form<TestData> {
     private static Button submitButton;
 
     @Override
-    public void submit(TestData testData) {
-        oddRadioButtons.select(testData.getSummary().get(0).toString());
-        eventRadioButtons.select(testData.getSummary().get(1).toString());
+    public void submit(MetalsColorsFormData metalsColorsFormData) {
+        oddRadioButtons.select(metalsColorsFormData.getSummary().get(0).toString());
+        eventRadioButtons.select(metalsColorsFormData.getSummary().get(1).toString());
 
-        for (String element : testData.getElements()) {
+        for (String element : metalsColorsFormData.getElements()) {
             elementsChecklist.select(element);
         }
 
-        colorsDropdown.select(testData.getColor());
-        metalsDropdown.select(testData.getMetals());
+        colorsDropdown.select(metalsColorsFormData.getColor());
+        metalsDropdown.select(metalsColorsFormData.getMetals());
         resetVegetables();
-        for (String vegetable : testData.getVegetables()) {
+        for (String vegetable : metalsColorsFormData.getVegetables()) {
             vegetablesDropdown.select(vegetable);
         }
 
