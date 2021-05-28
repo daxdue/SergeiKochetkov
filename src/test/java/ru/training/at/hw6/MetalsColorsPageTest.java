@@ -25,7 +25,7 @@ public class MetalsColorsPageTest {
 
     @BeforeMethod(alwaysRun = true)
     public void setUp() {
-        WebDriverFactory.useDriver(() -> BrowserManager.getChromeDriver());
+        WebDriverFactory.useDriver(BrowserManager::getChromeDriver);
         WebDriverFactory.reopenDriver();
         PageFactory.initSite(JdiSite.class);
         JdiSite.open();
@@ -51,31 +51,21 @@ public class MetalsColorsPageTest {
                 containsString(String.valueOf(metalsColorsFormData.getSummary().get(0)
                     + metalsColorsFormData.getSummary().get(1))));
         assertThat(jdiMetalsColorsPage.resultSection.getItemValue(ResultSectionItems.ELEMENTS),
-                containsString(getElementsAsString(metalsColorsFormData.getElements())));
+                containsString(getItemsAsString(metalsColorsFormData.getElements())));
         assertThat(jdiMetalsColorsPage.resultSection.getItemValue(ResultSectionItems.COLOR),
                 containsString(metalsColorsFormData.getColor()));
         assertThat(jdiMetalsColorsPage.resultSection.getItemValue(ResultSectionItems.METAL),
                 containsString(metalsColorsFormData.getMetals()));
         assertThat(jdiMetalsColorsPage.resultSection.getItemValue(ResultSectionItems.VEGETABLES),
-                containsString(getVegetablesAsString(metalsColorsFormData.getVegetables())));
+                containsString(getItemsAsString(metalsColorsFormData.getVegetables())));
     }
 
-
-    private String getElementsAsString(List<String> elements) {
-        String elementsString = new String();
-        for (int i = 0; i < elements.size() - 1; i++) {
-            elementsString.concat(elements.get(i)).concat(", ");
+    private String getItemsAsString(List<String> items) {
+        String itemsString = "";
+        for (int i = 0; i < items.size() - 1; i++) {
+            itemsString.concat(items.get(i).concat(", "));
         }
-        elementsString.concat(elements.get(elements.size() - 1));
-        return elementsString;
-    }
-
-    private String getVegetablesAsString(List<String> vegetables) {
-        String vegetablesString = new String();
-        for (int i = 0; i < vegetables.size() - 1; i++) {
-            vegetablesString.concat(vegetables.get(i)).concat(", ");
-        }
-        vegetablesString.concat(vegetables.get(vegetables.size() - 1));
-        return vegetablesString;
+        itemsString.concat(items.get(items.size() - 1));
+        return itemsString;
     }
 }
