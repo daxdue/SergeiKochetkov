@@ -260,9 +260,6 @@
         </profile>
         <profile>
             <id>hw5</id>
-            <!--<activation>
-                <activeByDefault>true</activeByDefault>
-            </activation>-->
             <properties>
                 <testng.suite.file>${testng.configs.path}/hw5/testSuiteHw5.xml</testng.suite.file>
             </properties>
