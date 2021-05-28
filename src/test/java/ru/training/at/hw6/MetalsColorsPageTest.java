@@ -1,18 +1,17 @@
 package ru.training.at.hw6;
 
 import com.epam.jdi.light.driver.WebDriverFactory;
-import com.epam.jdi.light.driver.WebDriverUtils;
 import com.epam.jdi.light.elements.init.PageFactory;
-import io.github.bonigarcia.wdm.WebDriverManager;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import ru.training.at.hw6.dataprovider.DataSource;
 import ru.training.at.hw6.dataprovider.MetalsColorsFormDataProviders;
+import ru.training.hw5.utils.BrowserManager;
 import ru.training.hw6.JdiSite;
 import ru.training.hw6.entities.MetalsColorsFormData;
 import ru.training.hw6.utils.HeaderElements;
+import ru.training.hw6.utils.ResultSectionItems;
 
 import java.util.List;
 
@@ -26,8 +25,7 @@ public class MetalsColorsPageTest {
 
     @BeforeMethod(alwaysRun = true)
     public void setUp() {
-        WebDriverManager.chromedriver();
-        WebDriverFactory.useDriver(() -> new ChromeDriver());
+        WebDriverFactory.useDriver(() -> BrowserManager.getChromeDriver());
         WebDriverFactory.reopenDriver();
         PageFactory.initSite(JdiSite.class);
         JdiSite.open();
@@ -35,7 +33,7 @@ public class MetalsColorsPageTest {
 
     @AfterMethod(alwaysRun = true)
     public void setDown() {
-        WebDriverUtils.killAllSeleniumDrivers();
+        BrowserManager.close();
     }
 
     @Test(dataProvider = MetalsColorsFormDataProviders.JSON_DATA_PROVIDER,
@@ -49,15 +47,27 @@ public class MetalsColorsPageTest {
         jdiMetalsColorsPage.checkOpened();
         jdiMetalsColorsPage.metalsColorsForm.submit(metalsColorsFormData);
 
-        assertThat(jdiMetalsColorsPage.resultSection.getSummaryRes(),
+        assertThat(jdiMetalsColorsPage.resultSection.getItemValue(ResultSectionItems.SUMMARY),
                 containsString(String.valueOf(metalsColorsFormData.getSummary().get(0)
                     + metalsColorsFormData.getSummary().get(1))));
-        assertThat(jdiMetalsColorsPage.resultSection.getColorRes(),
+        assertThat(jdiMetalsColorsPage.resultSection.getItemValue(ResultSectionItems.ELEMENTS),
+                containsString(getElementsAsString(metalsColorsFormData.getElements())));
+        assertThat(jdiMetalsColorsPage.resultSection.getItemValue(ResultSectionItems.COLOR),
                 containsString(metalsColorsFormData.getColor()));
-        assertThat(jdiMetalsColorsPage.resultSection.getMetalRes(),
+        assertThat(jdiMetalsColorsPage.resultSection.getItemValue(ResultSectionItems.METAL),
                 containsString(metalsColorsFormData.getMetals()));
-        assertThat(jdiMetalsColorsPage.resultSection.getVegetablesRes(),
+        assertThat(jdiMetalsColorsPage.resultSection.getItemValue(ResultSectionItems.VEGETABLES),
                 containsString(getVegetablesAsString(metalsColorsFormData.getVegetables())));
+    }
+
+
+    private String getElementsAsString(List<String> elements) {
+        String elementsString = new String();
+        for (int i = 0; i < elements.size() - 1; i++) {
+            elementsString.concat(elements.get(i)).concat(", ");
+        }
+        elementsString.concat(elements.get(elements.size() - 1));
+        return elementsString;
     }
 
     private String getVegetablesAsString(List<String> vegetables) {
@@ -68,5 +78,4 @@ public class MetalsColorsPageTest {
         vegetablesString.concat(vegetables.get(vegetables.size() - 1));
         return vegetablesString;
     }
-
 }
